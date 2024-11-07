@@ -16,5 +16,7 @@ namespace KoiFarmShop.Service.IServices
         Task<User> GetUserById(long userId);
 
         long GetNextUserId();
+
+        Task<bool> ResetPassword(User user);
     }
 }

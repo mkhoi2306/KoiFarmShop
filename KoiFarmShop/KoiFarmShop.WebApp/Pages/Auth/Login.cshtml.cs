@@ -1,7 +1,11 @@
 ﻿using KoiFarmShop.Repository.Models;
 using KoiFarmShop.Service.IServices;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data;
+using System.Security.Claims;
 
 namespace KoiFarmShop.WebApp.Pages.Auth
 {
@@ -23,24 +27,39 @@ namespace KoiFarmShop.WebApp.Pages.Auth
         {
             User user = await _userService.GetUserByEmail(Request.Form["email"]);
 
-            if(user == null)
+            if (user == null)
             {
                 ValidateErrors["email"] = "Tài khoản không tồn tại";
-   
-            }else if(user.Password != Request.Form["password"])
+
+            }
+            else if (user.Password != Request.Form["password"])
             {
                 ValidateErrors["password"] = "Password không đúng!!!";
 
             }
             else
             {
-                if(user.Role == "Customer")
+                var claims = new List<Claim>
+                {
+    new Claim("userId", user.UserId.ToString()),
+    new Claim(ClaimTypes.Email, user.Email),
+    new Claim(ClaimTypes.Role, user.Role)
+};
+
+                var claimsIdentity = new ClaimsIdentity(claims, "Login");
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+                if (user.Role == "Customer")
                 {
                     return RedirectToPage("/Index");
-                }else if(user.Role == "Staff")
+                }
+                else if (user.Role == "Staff")
                 {
-                    return Page();
-                }else if(user.Role == "Admin")
+                    return RedirectToPage("/Staff/Index");
+                }
+                else if (user.Role == "Admin")
                 {
                     return Page();
                 }

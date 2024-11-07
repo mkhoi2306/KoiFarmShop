@@ -47,5 +47,18 @@ namespace KoiFarmShop.Repository.Repositories
         {
             return await _context.Users.FirstAsync(x => x.UserId == userId);
         }
+
+        public async Task<bool> ResetPasswordForCustomer(User user)
+        {
+            var existUser = await _context.Users.FindAsync(user.UserId);
+            if (existUser != null)
+            {
+                existUser.Password = user.Password;
+                _context.Users.Update(existUser);
+               await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }

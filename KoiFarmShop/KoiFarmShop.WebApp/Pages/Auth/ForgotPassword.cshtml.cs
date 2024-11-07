@@ -21,7 +21,7 @@ namespace KoiFarmShop.WebApp.Pages.Auth
 
         public async Task<IActionResult> OnPost()
         {
-            User user = await _userService.GetUserByEmail(Request.Form["email"]);
+            User user = await _userService.GetUserByEmail(Request.Form["Email"]);
             if(user == null)
             {
                 ValidateErrors["email"] = "Tài khoản với email này không tồn tại";
@@ -29,6 +29,7 @@ namespace KoiFarmShop.WebApp.Pages.Auth
             }
             else
             {
+
                 return RedirectToPage("/Auth/ResetPassword", new { userId = user.UserId });
             }
         }

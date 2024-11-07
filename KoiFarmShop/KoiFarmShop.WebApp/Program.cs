@@ -1,15 +1,11 @@
-<<<<<<< HEAD
 using KoiFarmShop.Repository.IRepo;
 using KoiFarmShop.Repository.Models;
 using KoiFarmShop.Repository.Repositories;
 using KoiFarmShop.Service.IServices;
 using KoiFarmShop.Service.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
-=======
 using KoiFarmShop.Repository;
-using KoiFarmShop.Repository.Models;
 using KoiFarmShop.Service;
->>>>>>> main
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -83,7 +79,7 @@ app.MapRazorPages();
 
 app.MapGet("/", async context =>
 {
-    context.Response.Redirect("/Staff/Index");
+	context.Response.Redirect("/Index");
 });
 
 app.Run();

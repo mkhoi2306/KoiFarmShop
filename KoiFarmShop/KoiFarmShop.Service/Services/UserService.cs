@@ -37,5 +37,10 @@ namespace KoiFarmShop.Service.Services
         {
             return _userRepository.GetUserById(userId);
         }
+
+        public Task<bool> ResetPassword(User user)
+        {
+            return _userRepository.ResetPasswordForCustomer(user);
+        }
     }
 }
