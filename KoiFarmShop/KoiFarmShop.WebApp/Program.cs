@@ -1,4 +1,6 @@
+using KoiFarmShop.Repository;
 using KoiFarmShop.Repository.Models;
+using KoiFarmShop.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,10 @@ builder.Services.AddDbContext<KoiFarmShopContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
+
+builder.Services.AddScoped<IKoiFishService, KoiFishService>();
+builder.Services.AddScoped<IKoiFishRepository, KoiFishRepository>();
+builder.Services.AddDbContext<KoiFarmShopContext>();
 
 var app = builder.Build();
 
@@ -29,5 +35,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.MapGet("/", async context =>
+{
+    context.Response.Redirect("/Staff/Index");
+});
 
 app.Run();

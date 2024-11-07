@@ -3,7 +3,7 @@ using KoiFarmShop.Repository.Models;
 
 namespace KoiFarmShop.Service;
 
-public class KoiFishService
+public class KoiFishService : IKoiFishService
 {
     private readonly IKoiFishRepository _koiFishRepository;
 
@@ -12,27 +12,27 @@ public class KoiFishService
         _koiFishRepository = koiFishRepository;
     }
 
-    public async Task<List<KoiFish>> GetAllAsync()
+    public async Task<IEnumerable<KoiFish>> GetAllKoiFishAsync()
     {
         return await _koiFishRepository.GetAllAsync();
     }
 
-    public async Task<KoiFish> GetByIdAsync(long id)
+    public async Task<KoiFish> GetKoiFishByIdAsync(int id)
     {
         return await _koiFishRepository.GetByIdAsync(id);
     }
 
-    public async Task AddAsync(KoiFish koiFish)
+    public async Task AddKoiFishAsync(KoiFish koiFish)
     {
         await _koiFishRepository.AddAsync(koiFish);
     }
 
-    public async Task UpdateAsync(KoiFish koiFish)
+    public async Task UpdateKoiFishAsync(KoiFish koiFish)
     {
         await _koiFishRepository.UpdateAsync(koiFish);
     }
 
-    public async Task DeleteAsync(long id)
+    public async Task DeleteKoiFishAsync(int id)
     {
         await _koiFishRepository.DeleteAsync(id);
     }
