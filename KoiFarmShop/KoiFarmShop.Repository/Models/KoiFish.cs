@@ -25,6 +25,9 @@ public partial class KoiFish
 
     public string Gender { get; set; }
 
+    public byte[]? ImageData { get; set; }
+
+    public string? Type { get; set; }
     public string CreatedBy { get; set; }
 
     public string UpdateBy { get; set; }
