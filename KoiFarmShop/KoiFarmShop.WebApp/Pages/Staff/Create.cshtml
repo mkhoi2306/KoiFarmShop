@@ -2,85 +2,87 @@
 @model KoiFarmShop.WebApp.Pages.Staff.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+ViewData["Title"] = "Create";
 }
 
 <h1>Create</h1>
-
 <h4>KoiFish</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Trường KoiFishId cho người dùng điền -->
             <div class="form-group">
                 <label asp-for="KoiFish.KoiFishId" class="control-label"></label>
                 <input asp-for="KoiFish.KoiFishId" class="form-control" />
                 <span asp-validation-for="KoiFish.KoiFishId" class="text-danger"></span>
             </div>
+
+            <!-- Trường Name -->
             <div class="form-group">
                 <label asp-for="KoiFish.Name" class="control-label"></label>
                 <input asp-for="KoiFish.Name" class="form-control" />
                 <span asp-validation-for="KoiFish.Name" class="text-danger"></span>
             </div>
+
+            <!-- Trường Category -->
             <div class="form-group">
-                <label asp-for="KoiFish.CategoryId" class="control-label"></label>
-                <select asp-for="KoiFish.CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <label asp-for="KoiFish.CategoryId" class="control-label">Category</label>
+                <select asp-for="KoiFish.CategoryId" class="form-control" asp-items="@(ViewData["CategoryId"] as SelectList)"></select>
+                <span asp-validation-for="KoiFish.CategoryId" class="text-danger"></span>
             </div>
+
+            <!-- Trường Size -->
             <div class="form-group">
-                <label asp-for="KoiFish.SizeId" class="control-label"></label>
-                <select asp-for="KoiFish.SizeId" class ="form-control" asp-items="ViewBag.SizeId"></select>
+                <label asp-for="KoiFish.SizeId" class="control-label">Size</label>
+                <select asp-for="KoiFish.SizeId" class="form-control" asp-items="@(ViewData["SizeId"] as SelectList)"></select>
+                <span asp-validation-for="KoiFish.SizeId" class="text-danger"></span>
             </div>
+
+            <!-- Trường Description -->
             <div class="form-group">
                 <label asp-for="KoiFish.Description" class="control-label"></label>
                 <input asp-for="KoiFish.Description" class="form-control" />
                 <span asp-validation-for="KoiFish.Description" class="text-danger"></span>
             </div>
+
+            <!-- Trường Dob -->
             <div class="form-group">
                 <label asp-for="KoiFish.Dob" class="control-label"></label>
                 <input asp-for="KoiFish.Dob" class="form-control" />
                 <span asp-validation-for="KoiFish.Dob" class="text-danger"></span>
             </div>
+
+            <!-- Trường Price -->
             <div class="form-group">
                 <label asp-for="KoiFish.Price" class="control-label"></label>
                 <input asp-for="KoiFish.Price" class="form-control" />
                 <span asp-validation-for="KoiFish.Price" class="text-danger"></span>
             </div>
+
+            <!-- Trường Origin -->
             <div class="form-group">
                 <label asp-for="KoiFish.Origin" class="control-label"></label>
                 <input asp-for="KoiFish.Origin" class="form-control" />
                 <span asp-validation-for="KoiFish.Origin" class="text-danger"></span>
             </div>
+
+            <!-- Trường Gender -->
             <div class="form-group">
                 <label asp-for="KoiFish.Gender" class="control-label"></label>
                 <input asp-for="KoiFish.Gender" class="form-control" />
                 <span asp-validation-for="KoiFish.Gender" class="text-danger"></span>
             </div>
+
+            <!-- Trường Upload Image -->
             <div class="form-group">
-                <label asp-for="KoiFish.CreatedBy" class="control-label"></label>
-                <input asp-for="KoiFish.CreatedBy" class="form-control" />
-                <span asp-validation-for="KoiFish.CreatedBy" class="text-danger"></span>
+                <label for="ImageFile">Upload Image</label>
+                <input type="file" id="ImageFile" name="ImageFile" class="form-control" />
+                <span asp-validation-for="KoiFish.ImagePath" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.UpdateBy" class="control-label"></label>
-                <input asp-for="KoiFish.UpdateBy" class="form-control" />
-                <span asp-validation-for="KoiFish.UpdateBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.CreateDate" class="control-label"></label>
-                <input asp-for="KoiFish.CreateDate" class="form-control" />
-                <span asp-validation-for="KoiFish.CreateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.UpdateDate" class="control-label"></label>
-                <input asp-for="KoiFish.UpdateDate" class="form-control" />
-                <span asp-validation-for="KoiFish.UpdateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.IsDeleted" class="control-label"></label>
-                <input asp-for="KoiFish.IsDeleted" class="form-control" />
-                <span asp-validation-for="KoiFish.IsDeleted" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -91,4 +93,3 @@
 <div>
     <a asp-page="Index">Back to List</a>
 </div>
-
