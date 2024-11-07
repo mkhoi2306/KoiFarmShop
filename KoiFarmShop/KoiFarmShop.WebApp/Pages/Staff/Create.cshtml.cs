@@ -1,62 +1,77 @@
 using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiFarmShop.Repository.Models;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 namespace KoiFarmShop.WebApp.Pages.Staff
 {
-    public class CreateModel : PageModel
-    {
-        private readonly KoiFarmShop.Repository.Models.KoiFarmShopContext _context;
+	public class CreateModel : PageModel
+	{
+		private readonly KoiFarmShop.Repository.Models.KoiFarmShopContext _context;
 
-        public CreateModel(KoiFarmShop.Repository.Models.KoiFarmShopContext context)
-        {
-            _context = context;
-        }
 
-        [BindProperty]
-        public KoiFish KoiFish { get; set; } 
-        public async Task<IActionResult> OnGetAsync()
-        {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
-            ViewData["SizeId"] = new SelectList(_context.Sizes, "SizeId", "SizeId");
-            return Page();
-        }
+		[BindProperty]
+		public IFormFile KoiImage { get; set; }
 
-        public async Task<IActionResult> OnPostAsync(IFormFile? ImageFile)
-        {
-            if (!ModelState.IsValid)
+		public CreateModel(KoiFarmShop.Repository.Models.KoiFarmShopContext context)
+		{
+			_context = context;
+		}
+
+		public IActionResult OnGet()
+		{
+			ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
+			ViewData["SizeId"] = new SelectList(_context.Sizes, "SizeId", "SizeId");
+			return Page();
+		}
+
+		[BindProperty]
+		public KoiFish KoiFish { get; set; } = default!;
+
+		// For more information, see https://aka.ms/RazorPagesCRUD.
+		//public async Task<IActionResult> OnPostAsync()
+		//{
+		//    if (!ModelState.IsValid)
+		//    {
+		//        return Page();
+		//    }
+
+		//    _context.KoiFishes.Add(KoiFish);
+		//    await _context.SaveChangesAsync();
+
+		//    return RedirectToPage("./Index");
+		//}
+
+		public IActionResult OnPost()
+		{
+			KoiFish koiFish = new KoiFish();
+			koiFish.KoiFishId = 1;
+			byte[] koiImage = null;
+			if (KoiImage != null)
+			{
+				 using (var memoryStream = new MemoryStream())
             {
-                return Page();
+                KoiImage.CopyTo(memoryStream);
+                 koiImage = memoryStream.ToArray();
             }
-
-            // Xử lý ảnh nếu có
-            if (ImageFile != null && ImageFile.Length > 0)
-            {
-                var fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
-                var extension = Path.GetExtension(ImageFile.FileName);
-                var newFileName = fileName + DateTime.Now.ToString("yyyyMMddHHmmss") + extension;
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", newFileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await ImageFile.CopyToAsync(stream);
-                }
-
-                //KoiFish.ImagePath = "/images/" + newFileName;
-            }
-            
-            _context.KoiFishes.Add(KoiFish);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
-        }
-
-
-
-    }
+				koiFish.ImageData = koiImage;
+				koiFish.Type = Request.Form["statusConsignment"];
+				_context.KoiFishes.Add(koiFish);
+				_context.SaveChanges();
+				return RedirectToPage("/Index");
+			}
+			else
+			{
+				ModelState.AddModelError("KoiImage", "Please upload an image.");
+				return Page();  // Quay l?i trang n?u kh�ng c� ?nh
+			}
+	
+			return Page();
+		}
+	}
 }

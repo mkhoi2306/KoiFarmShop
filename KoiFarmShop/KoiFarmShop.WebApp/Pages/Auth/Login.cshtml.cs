@@ -53,7 +53,13 @@ namespace KoiFarmShop.WebApp.Pages.Auth
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
                 if (user.Role == "Customer")
                 {
-                    return RedirectToPage("/Index");
+                    Customer customer = await _userService.GetCustomerByUser(user.UserId);
+                    if(customer != null)
+                    {
+                       claims.Add(new Claim("customerId", customer.CustomerId.ToString()));
+                        return RedirectToPage("/Index");
+                    }
+                    return Page();
                 }
                 else if (user.Role == "Staff")
                 {
