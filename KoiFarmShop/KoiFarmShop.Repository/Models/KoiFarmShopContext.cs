@@ -136,6 +136,14 @@ public partial class KoiFarmShopContext : DbContext
                 .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("FK__KoiFish__Categor__403A8C7D");
 
+            entity.Property(e => e.ImageData)
+              .HasColumnType("varbinary(max)")
+              .HasColumnName("ImageData");
+
+            entity.Property(e => e.Type)
+             .HasColumnType("NVARCHAR")
+             .HasColumnName("Type");
+
             entity.HasOne(d => d.Size).WithMany(p => p.KoiFishes)
                 .HasForeignKey(d => d.SizeId)
                 .HasConstraintName("FK__KoiFish__SizeID__412EB0B6");
