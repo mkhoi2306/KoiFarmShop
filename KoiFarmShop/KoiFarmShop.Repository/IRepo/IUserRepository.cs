@@ -18,6 +18,8 @@ namespace KoiFarmShop.Repository.IRepo
         long GetNextUserId();
 
         Task<bool> ResetPasswordForCustomer(User user);
+
+        Task<Customer> GetCustomerByUserId(long userId);
     }
 
 }
