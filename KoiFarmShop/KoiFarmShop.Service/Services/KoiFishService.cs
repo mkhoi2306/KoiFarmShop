@@ -36,4 +36,10 @@ public class KoiFishService : IKoiFishService
     {
         await _koiFishRepository.DeleteAsync(id);
     }
+
+    public long GetKoiFishId()
+    {
+        return _koiFishRepository.GetnextKoiFishId();
+        
+    }
 }

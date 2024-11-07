@@ -2,92 +2,57 @@
 @model KoiFarmShop.WebApp.Pages.Staff.CreateModel
 
 @{
-	ViewData["Title"] = "Create";
+	ViewData["Title"] = "Create KoiFish";
 }
 
-<h1>Create</h1>
-
-<h4>KoiFish</h4>
+<h4>Create KoiFish</h4>
 <hr />
 <div class="row">
 	<div class="col-md-4">
 		<form method="post" enctype="multipart/form-data">
-			@*  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-			<label asp-for="KoiFish.KoiFishId" class="control-label"></label>
-			<input asp-for="KoiFish.KoiFishId" class="form-control" />
-			<span asp-validation-for="KoiFish.KoiFishId" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.Name" class="control-label"></label>
-			<input asp-for="KoiFish.Name" class="form-control" />
-			<span asp-validation-for="KoiFish.Name" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.CategoryId" class="control-label"></label>
-			<select asp-for="KoiFish.CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.SizeId" class="control-label"></label>
-			<select asp-for="KoiFish.SizeId" class ="form-control" asp-items="ViewBag.SizeId"></select>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.Description" class="control-label"></label>
-			<input asp-for="KoiFish.Description" class="form-control" />
-			<span asp-validation-for="KoiFish.Description" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.Dob" class="control-label"></label>
-			<input asp-for="KoiFish.Dob" class="form-control" />
-			<span asp-validation-for="KoiFish.Dob" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.Price" class="control-label"></label>
-			<input asp-for="KoiFish.Price" class="form-control" />
-			<span asp-validation-for="KoiFish.Price" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.Origin" class="control-label"></label>
-			<input asp-for="KoiFish.Origin" class="form-control" />
-			<span asp-validation-for="KoiFish.Origin" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.Gender" class="control-label"></label>
-			<input asp-for="KoiFish.Gender" class="form-control" />
-			<span asp-validation-for="KoiFish.Gender" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.CreatedBy" class="control-label"></label>
-			<input asp-for="KoiFish.CreatedBy" class="form-control" />
-			<span asp-validation-for="KoiFish.CreatedBy" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.UpdateBy" class="control-label"></label>
-			<input asp-for="KoiFish.UpdateBy" class="form-control" />
-			<span asp-validation-for="KoiFish.UpdateBy" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.CreateDate" class="control-label"></label>
-			<input asp-for="KoiFish.CreateDate" class="form-control" />
-			<span asp-validation-for="KoiFish.CreateDate" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.UpdateDate" class="control-label"></label>
-			<input asp-for="KoiFish.UpdateDate" class="form-control" />
-			<span asp-validation-for="KoiFish.UpdateDate" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-			<label asp-for="KoiFish.IsDeleted" class="control-label"></label>
-			<input asp-for="KoiFish.IsDeleted" class="form-control" />
-			<span asp-validation-for="KoiFish.IsDeleted" class="text-danger"></span>
-			</div> *@
-
-			<div class="form-group">
-				<label for="koiName" class="form-label">Koi Name</label>
-				<input type="text" name="KoiName" id="koiName" class="form-input" />
+				<label for="koiName">Koi Fish Name</label>
+				<input type="text" id="koiName" name="KoiFish.Name" class="form-control" required />
 			</div>
 
+			<div class="form-group">
+				<label for="categoryId">Category</label>
+				<select id="categoryId" name="KoiFish.CategoryId" class="form-control" required>
+					<option value="">Select Category</option>
+					@foreach (var category in ViewData["CategoryId"] as IEnumerable<SelectListItem>)
+					{
+					<option value="@category.Value">@category.Text</option>
+					}
+				</select>
+			</div>
 
+			<div class="form-group">
+				<label for="sizeId">Size</label>
+				<select id="sizeId" name="KoiFish.SizeId" class="form-control" required>
+					<option value="">Select Size</option>
+					@foreach (var size in ViewData["SizeId"] as IEnumerable<SelectListItem>)
+					{
+					<option value="@size.Value">@size.Text</option>
+					}
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="description">Description</label>
+				<textarea id="description" name="KoiFish.Description" class="form-control" required></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="dob">Date of Birth</label>
+				<input type="date" id="dob" name="KoiFish.Dob" class="form-control" />
+			</div>
+
+			<div class="form-group">
+				<label for="price">Price</label>
+				<input type="number" id="price" name="KoiFish.Price" class="form-control" step="0.01" />
+			</div>
+			
 			<div class="form-group">
 				<label for="koiImage" class="form-label">Koi Image</label>
 				<input type="file" asp-for = "KoiImage" id="koiImage" class="form-input" />
@@ -96,11 +61,11 @@
 			<label for="statusConsignment" class="form-label me-2 mb-0">Status:</label>
 			<select name="statusConsignment" id="statusConsignment" class="form-select w-auto me-2">
 				<option value="ALL">Tất cả</option>
-				<option value="PENDING">Pending</option>
-				<option value="REJECTED">Rejected</option>
-				<option value="APPROVED">Approved</option>
-				<option value="CONFIRMED">Confirmed</option>
-				<option value="CANCELLED">Cancelled</option>
+				<option value="PENDING">Kohaku</option>
+				<option value="REJECTED">Sanke</option>
+				<option value="APPROVED">Showa</option>
+				<option value="CONFIRMED">Ogon</option>
+				<option value="CANCELLED">Chagoi</option>
 			</select>
 			<div class="form-group">
 				<input type="submit" value="Create" class="btn btn-primary" />

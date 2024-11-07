@@ -9,4 +9,7 @@ public interface IKoiFishService
     Task AddKoiFishAsync(KoiFish koiFish);
     Task UpdateKoiFishAsync(KoiFish koiFish);
     Task DeleteKoiFishAsync(int id);
+
+    long GetKoiFishId();
+
 }
