@@ -32,6 +32,18 @@ namespace KoiFarmShop.Repository.Repositories
             }
         }
 
+        public async Task<Customer> GetCustomerByUserId(long userId)
+        {
+            var exitUser = await _context.Users.Include(u => u.Customers).FirstOrDefaultAsync(u => u.UserId ==userId);
+            if ((exitUser != null))
+            {
+                var customer = exitUser.Customers.FirstOrDefault();
+                return customer;
+            }
+
+            return null;
+        }
+
         public long GetNextUserId()
         {
             var maxuserId = _context.Users.Max(x => (long?)x.UserId) ?? 0;
