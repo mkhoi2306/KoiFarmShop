@@ -1,0 +1,29 @@
+@page
+@model KoiFarmShop.WebApp.Pages.Staff.IndexModel
+
+@{
+    ViewData["Title"] = "Koi Fish List";
+}
+
+<h1>Koi Fish List</h1>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Origin</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var koi in Model.KoiFishes)
+    {
+        <tr>
+            <td>@koi.Name</td>
+            <td>@koi.Origin</td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@koi.KoiFishId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@koi.KoiFishId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@koi.KoiFishId">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+<a asp-page="./Create">Add New Koi Fish</a>
