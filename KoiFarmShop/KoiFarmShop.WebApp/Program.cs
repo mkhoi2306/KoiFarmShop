@@ -26,6 +26,8 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<IKoiOrderDetailService, KoiOrderDetailService>();
+
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 builder.Services.AddScoped<IKoiFishService, KoiFishService>();

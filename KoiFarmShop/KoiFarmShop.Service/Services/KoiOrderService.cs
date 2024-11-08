@@ -2,20 +2,15 @@
 using KoiFarmShop.Repository.Models;
 using KoiFarmShop.Repository.Models.Items;
 using KoiFarmShop.Service.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace KoiFarmShop.Service.Services
 {
     public class KoiOrderService : IKoiOrderService
     {
-
         private readonly IKoiOrderRepository _orderRepository;
 
-        public KoiOrderService(IKoiOrderRepository orderRepository) 
+        public KoiOrderService(IKoiOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
         }
@@ -52,42 +47,36 @@ namespace KoiFarmShop.Service.Services
             return await _orderRepository.UpdateOrderAsync(order);
         }
 
-        public async Task<KoiOrder> CreateOrderAsync(long customerId, List<CartItem> cartItems, string createdBy)
+        public async Task<List<KoiOrder>> GetAllOrdersByAccountAsync(long customerId)
         {
-            double totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
-            int totalQuantity = cartItems.Sum(item => item.Quantity);
-
-            // Create order
-            var order = new KoiOrder
+            try
             {
-                CustomerId = customerId,
-                Price = totalPrice,
-                Quantity = totalQuantity,
-                CreatedDate = DateTime.UtcNow,
-                CreatedBy = createdBy,
-                IsDeleted = false
-            };
-
-            // Save order
-            order = await _orderRepository.CreateOrderAsync(order);
-
-            // Create order details
-            foreach (var item in cartItems)
-            {
-                var orderDetail = new KoiOrderDetail
-                {
-                    KoiOrderId = order.KoiOrderId,
-                    KoiFishId = item.KoiFishId,
-                    TotalPrice = item.Price * item.Quantity,
-                    CreatedDate = DateTime.UtcNow,
-                    CreatedBy = createdBy,
-                    IsDeleted = false
-                };
-
-                await _orderRepository.CreateOrderDetailAsync(orderDetail);
+                // Không dùng `using` ở đây để giữ DbContext mở cho đến khi truy vấn hoàn thành
+                var context = new KoiFarmShopContext();
+                return await context.KoiOrders
+                    .Include(o => o.KoiOrderDetails)
+                    .Where(o => o.CustomerId == customerId)
+                    .ToListAsync();
             }
+            catch (Exception e)
+            {
+                // Chỉ bắt ngoại lệ nếu bạn cần xử lý cụ thể
+                throw new Exception("An error occurred while retrieving orders: " + e.Message);
+            }
+        }
+        public async Task<long> CreateOrderAsync(KoiOrder koiOrder)
+        {
+            using var context = new KoiFarmShopContext();
+            var maxId = await context.KoiOrders.MaxAsync(u => (long?)u.KoiOrderId) ?? 0;
+            long id = maxId + 1;
+            koiOrder.KoiOrderId = id;
 
-            return order;
+            // Thêm đơn hàng và lưu thay đổi
+            await context.KoiOrders.AddAsync(koiOrder);
+            await context.SaveChangesAsync();
+
+
+            return koiOrder.KoiOrderId;
         }
 
         public async Task<KoiOrder> GetOrderAsync(long orderId)

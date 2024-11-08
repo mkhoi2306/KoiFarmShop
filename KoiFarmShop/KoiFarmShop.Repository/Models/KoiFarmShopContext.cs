@@ -9,6 +9,10 @@ namespace KoiFarmShop.Repository.Models;
 
 public partial class KoiFarmShopContext : DbContext
 {
+    public KoiFarmShopContext()
+    {
+        
+    }
     public KoiFarmShopContext(DbContextOptions<KoiFarmShopContext> options)
         : base(options)
     {
