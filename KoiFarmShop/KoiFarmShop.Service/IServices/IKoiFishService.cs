@@ -12,4 +12,6 @@ public interface IKoiFishService
 
     long GetKoiFishId();
 
+    Task<bool> UpdateKoiFish(KoiFish koiFish);  
+
 }

@@ -10,6 +10,8 @@ public interface IKoiFishRepository
     Task UpdateAsync(KoiFish koiFish);
     Task DeleteAsync(int id);
 
+    Task<bool> UpdateKoiFish(KoiFish koiFish);
+
     long GetnextKoiFishId();
 
 }

@@ -42,4 +42,9 @@ public class KoiFishService : IKoiFishService
         return _koiFishRepository.GetnextKoiFishId();
         
     }
+
+    public Task<bool> UpdateKoiFish(KoiFish koiFish)
+    {
+        return _koiFishRepository.UpdateKoiFish(koiFish);
+    }
 }

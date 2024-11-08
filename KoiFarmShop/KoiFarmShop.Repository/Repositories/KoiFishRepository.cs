@@ -49,4 +49,22 @@ public class KoiFishRepository : IKoiFishRepository
         var maxId = _context.KoiFishes.Max(k => (long?)k.KoiFishId) ?? 0;
         return maxId + 1;
     }
+
+    public async Task<bool> UpdateKoiFish(KoiFish koiFish)
+    {
+        var existKoiFish = await _context.KoiFishes.FirstOrDefaultAsync(k => k.KoiFishId == koiFish.KoiFishId);
+        if(existKoiFish != null)
+        {
+            existKoiFish.Name = koiFish.Name;
+            existKoiFish.Description = koiFish.Description;
+            existKoiFish.Dob = koiFish.Dob;
+            existKoiFish.UpdateDate = DateTime.Now;
+            existKoiFish.Price = koiFish.Price;
+            existKoiFish.Type = koiFish.Type;
+            _context.KoiFishes.Update(existKoiFish);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        return false;
+    }
 }

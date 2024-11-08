@@ -24,6 +24,9 @@ namespace KoiFarmShop.WebApp.Pages.Staff
         [BindProperty]
         public KoiFish KoiFish { get; set; } = default!;
 
+        [BindProperty]
+        public IFormFile KoiImage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(long? id)
         {
             if (id == null)
@@ -41,34 +44,49 @@ namespace KoiFarmShop.WebApp.Pages.Staff
             ViewData["SizeId"] = new SelectList(_context.Sizes, "SizeId", "SizeId");
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
 
-            _context.Attach(KoiFish).State = EntityState.Modified;
+        //    _context.Attach(KoiFish).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!KoiFishExists(KoiFish.KoiFishId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!KoiFishExists(KoiFish.KoiFishId))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            await _koiFishService.UpdateKoiFishAsync(KoiFish);
-            return RedirectToPage("/Index");
+        //    await _koiFishService.UpdateKoiFishAsync(KoiFish);
+        //    return RedirectToPage("/Index");
             
+        //}
+
+        public async Task<IActionResult> OnPost()
+        {
+            KoiFish.KoiFishId = long.Parse(Request.Form["koiFishId"]);
+            KoiFish.Name = Request.Form["KoiFish.Name"];
+            KoiFish.Description = Request.Form["KoiFish.Description"];
+            KoiFish.Dob = DateTime.Parse(Request.Form["KoiFish.Dob"]);
+            KoiFish.Price = double.Parse(Request.Form["KoiFish.Price"]);
+            KoiFish.Type = Request.Form["statusConsignment"];
+            if(await _koiFishService.UpdateKoiFish(KoiFish))
+            {
+                return RedirectToPage("/Staff/Index");
+            }
+            return Page();
         }
 
         private bool KoiFishExists(long id)

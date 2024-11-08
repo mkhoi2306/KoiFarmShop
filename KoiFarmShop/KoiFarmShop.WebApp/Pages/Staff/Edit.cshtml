@@ -11,14 +11,16 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+            <div class="form-group">
+                <input type="hidden" name="koiFishId" class="form-control" value="@Model.KoiFish.KoiFishId" required />
+            </div>
             <div class="form-group">
                 <label for="koiName">Koi Fish Name</label>
                 <input type="text" id="koiName" name="KoiFish.Name" class="form-control" value="@Model.KoiFish.Name" required />
             </div>
 
             <!-- Category Dropdown -->
-            <div class="form-group">
+           @*  <div class="form-group">
                 <label for="categoryId">Category</label>
                 <select id="categoryId" name="KoiFish.CategoryId" class="form-control" required>
                     <option value="">Select Category</option>
@@ -60,7 +62,7 @@
                     }
                 </select>
             </div>
-
+ *@
 
 
             <!-- Description -->
@@ -80,6 +82,11 @@
                 <label for="price">Price</label>
                 <input type="number" id="price" name="KoiFish.Price" class="form-control" value="@Model.KoiFish.Price" step="0.01" />
             </div>
+
+            @* <div class="form-group">
+                <label for="koiImage" class="form-label">Koi Image</label>
+                <input type="file" asp-for="KoiImage" id="koiImage" class="form-input" />
+            </div> *@
 
             <label for="statusConsignment" class="form-label me-2 mb-0">Type:</label>
             <select name="statusConsignment" id="statusConsignment" class="form-select w-auto me-2">
