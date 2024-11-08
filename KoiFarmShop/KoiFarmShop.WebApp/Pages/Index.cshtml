@@ -74,16 +74,18 @@
     <div class="row">
         @foreach (var koiFish in Model.KoiFishList)
         {
-        <div class="col-md-3">
-            <div class="card product-card">
-                <img src="@koiFish.ImageUrl" class="card-img-top" alt="KOI Fish" style="height: 400px" />
-                <div class="card-body">
-                    <h5 class="card-title">@koiFish.Name</h5>
-                    <p class="card-text">Price: @koiFish.Price?.ToString("N0") VND</p>
-                    <button class="btn btn-primary w-100">Add to Cart</button>
+            <div class="col-md-3">
+                <div class="card product-card">
+                    <a href="/KoiFishDetail?id=@koiFish.KoiFishId" class="text-decoration-none text-dark">
+                        <img src="@koiFish.ImageUrl" class="card-img-top" alt="KOI Fish" style="height: 400px" />
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">@koiFish.Name</h5>
+                        <p class="card-text">Price: @koiFish.Price?.ToString("N0") VND</p>
+                        <button class="btn btn-primary w-100">Add to Cart</button>
+                    </div>
                 </div>
             </div>
-        </div>
         }
     </div>
 </div>
