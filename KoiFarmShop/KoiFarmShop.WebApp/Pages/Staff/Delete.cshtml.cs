@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiFarmShop.Repository.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KoiFarmShop.WebApp.Pages.Staff
 {
-    public class DeleteModel : PageModel
+	[Authorize(Roles = "Staff")]
+	public class DeleteModel : PageModel
     {
         private readonly KoiFarmShop.Repository.Models.KoiFarmShopContext _context;
 

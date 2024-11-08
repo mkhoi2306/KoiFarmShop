@@ -2,60 +2,70 @@
 @model KoiFarmShop.WebApp.Pages.Staff.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = "Details";
+	Layout = "~/Pages/Shared/_StaffLayout.cshtml";
 }
+<h4 class="mb-4">Koi Fish Details</h4>
+<hr />
+<div class="row justify-content-center">
+	<div class="col-md-8 col-lg-6">
+		<form method="post" enctype="multipart/form-data" disabled>
+			<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-<h1>Details</h1>
+			<!-- Koi Fish Name -->
+			<div class="form-group mb-3">
+				<label for="koiName" class="form-label">Koi Fish Name</label>
+				<input type="text" id="koiName" class="form-control" value="@Model.KoiFish.Name" readonly />
+			</div>
 
-<div>
-    <h4>KoiFish</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KoiFish.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KoiFish.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KoiFish.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KoiFish.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KoiFish.Dob)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KoiFish.Dob)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KoiFish.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KoiFish.Price)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KoiFish.CreateDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KoiFish.CreateDate)
-        </dd>
-        <dd class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KoiFish.Type)
-        </dd>
-        <dt class="col-sm-10">
-            @Html.DisplayFor(model => model.KoiFish.Type)
-        </dt>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KoiFish.IsDeleted)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KoiFish.IsDeleted)
-        
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.KoiFish.KoiFishId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+			<!-- Koi Image -->
+			<div class="form-group mb-3">
+				<label for="koiImage" class="form-label">Koi Image</label>
+				@if (Model.KoiFish.ImageData != null && Model.KoiFish.ImageData.Length > 0)
+				{
+					<img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.KoiFish.ImageData)" class="img-fluid mb-3" alt="Koi Image" style="max-width: 100%; height: auto; border-radius: 8px;" />
+				}
+				else
+				{
+					<p>No image available</p>
+				}
+			</div>
+
+			<!-- Description -->
+			<div class="form-group mb-3">
+				<label for="description" class="form-label">Description</label>
+				<textarea id="description" class="form-control" readonly>@Model.KoiFish.Description</textarea>
+			</div>
+
+			<!-- Date of Birth -->
+			<div class="form-group mb-3">
+				<label for="dob" class="form-label">Date of Birth</label>
+				<input type="text" id="dob" class="form-control" value="@Model.KoiFish.Dob?.ToString("yyyy-MM-dd")" readonly />
+			</div>
+
+			<!-- Price -->
+			<div class="form-group mb-3">
+				<label for="price" class="form-label">Price</label>
+				<input type="text" id="price" class="form-control" value="@Model.KoiFish.Price" readonly />
+			</div>
+
+			<!-- Gender -->
+			<div class="form-group mb-3">
+				<label for="gender" class="form-label">Gender</label>
+				<input type="text" id="gender" class="form-control" value="@Model.KoiFish.Gender" readonly />
+			</div>
+
+			<!-- Type -->
+			<div class="form-group mb-3">
+				<label for="type" class="form-label">Type</label>
+				<input type="text" id="type" class="form-control" value="@Model.KoiFish.Type" readonly />
+			</div>
+
+			<!-- Back Button -->
+			<div class="form-group mb-3">
+				<a href="/Staff" class="btn btn-secondary w-100">Back</a>
+			</div>
+
+		</form>
+	</div>
 </div>

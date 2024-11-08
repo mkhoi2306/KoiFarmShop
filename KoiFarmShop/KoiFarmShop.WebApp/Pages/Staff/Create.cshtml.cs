@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,33 +8,35 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiFarmShop.Repository.Models;
 using KoiFarmShop.Service;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KoiFarmShop.WebApp.Pages.Staff
 {
+	[Authorize(Roles = "Staff")]
 	public class CreateModel : PageModel
 	{
-		private readonly KoiFarmShop.Repository.Models.KoiFarmShopContext _context;
 		private readonly IKoiFishService _koiFishService;
 
 
 		[BindProperty]
 		public IFormFile KoiImage { get; set; }
 
-		public CreateModel(KoiFarmShop.Repository.Models.KoiFarmShopContext context, IKoiFishService koiFishService)
+		[BindProperty]
+		public KoiFish koiFish { get; set; } = default!;
+
+		public CreateModel(IKoiFishService koiFishService)
 		{
-			_context = context;
 			_koiFishService = koiFishService;
 		}
-		
+
 		public IActionResult OnGet()
 		{
-			ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
-			ViewData["SizeId"] = new SelectList(_context.Sizes, "SizeId", "SizeId");
+			// Khởi tạo ViewData và các thuộc tính khác cần thiết
+			ViewData["Title"] = "Create KoiFish";
+			koiFish = new KoiFish(); // Nếu koiFish cần thiết trong .cshtml
 			return Page();
 		}
 
-		[BindProperty]
-		public KoiFish koiFish { get; set; } = default!;
 
 		public async Task<IActionResult> OnPost()
 		{
@@ -42,7 +44,7 @@ namespace KoiFarmShop.WebApp.Pages.Staff
 			{
 				return Page();
 			}
-			
+
 			koiFish.KoiFishId = GetKoiFishID();
 			byte[] koiImage = null;
 			if (KoiImage != null)
@@ -53,23 +55,25 @@ namespace KoiFarmShop.WebApp.Pages.Staff
 					koiImage = memoryStream.ToArray();
 				}
 				koiFish.CreateDate = DateTime.Now;
-				koiFish.IsDeleted = false; 
+				koiFish.IsDeleted = false;
 				koiFish.ImageData = koiImage;
 				koiFish.ImageData = koiImage;
-				koiFish.Type = Request.Form["statusConsignment"];
+				koiFish.Gender = Request.Form["gender"];
+				koiFish.Type = Request.Form["type"];
 				await _koiFishService.AddKoiFishAsync(koiFish);
+				TempData["SuccessMessage"] = "Koi fish created successfully.";
 				return RedirectToPage("/Staff/Index");
-            {
-            }
+				{
+				}
 			}
 			else
 			{
 				ModelState.AddModelError("KoiImage", "Please upload an image.");
 				return Page();
 			}
-			
+
 			await _koiFishService.AddKoiFishAsync(koiFish);
-			
+
 			return RedirectToPage("/Staff/Index");
 		}
 

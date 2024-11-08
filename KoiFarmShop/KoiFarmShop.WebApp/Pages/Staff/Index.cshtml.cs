@@ -7,23 +7,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiFarmShop.Repository.Models;
 using KoiFarmShop.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KoiFarmShop.WebApp.Pages.Staff
 {
-    public class IndexModel : PageModel
-    {
-        private readonly IKoiFishService _koiFishService;
+	[Authorize(Roles = "Staff")]
+	public class IndexModel : PageModel
+	{
+		private readonly IKoiFishService _koiFishService;
 
-        public IndexModel(IKoiFishService koiFishService)
-        {
-            _koiFishService = koiFishService;
-        }
+		public IndexModel(IKoiFishService koiFishService)
+		{
+			_koiFishService = koiFishService;
+		}
 
-        public IList<KoiFish> KoiFishes { get; set; }
+		public IList<KoiFish> KoiFishes { get; set; }
 
-        public async Task OnGetAsync()
-        {
-            KoiFishes = (await _koiFishService.GetAllKoiFishAsync()).ToList();
-        }
-    }
+		public async Task OnGetAsync()
+		{
+			KoiFishes = (await _koiFishService.GetAllKoiFishAsync()).ToList();
+		}
+	}
 }

@@ -21,17 +21,16 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
+builder.Services.AddScoped<IKoiFishService, KoiFishService>();
+
+builder.Services.AddScoped<IKoiFishRepository, KoiFishRepository>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>
 	{
 		options.LoginPath = "/Auth/Login";
-		options.LogoutPath = "/Logout";
-		options.AccessDeniedPath = "/Login";
-
+		options.AccessDeniedPath = "/Auth/Login"; 
 		options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-
-		options.Cookie.Expiration = null;
-
 		options.SlidingExpiration = true;
 		options.Cookie.HttpOnly = true;
 		options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
@@ -40,12 +39,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization(options =>
 {
-	options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Customer"));
-	options.AddPolicy("RequireAdminRole", policy =>
-		policy.RequireRole("Admin"));
+	options.AddPolicy("RequireCustomerRole", policy => policy.RequireRole("Customer"));
 
-	options.AddPolicy("RequireStaffRole", policy =>
-		policy.RequireRole("Staff"));
+	options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+
+	options.AddPolicy("RequireStaffRole", policy => policy.RequireRole("Staff"));
 });
 
 builder.Services.AddDbContext<KoiFarmShopContext>(options =>
@@ -54,8 +52,6 @@ builder.Services.AddDbContext<KoiFarmShopContext>(options =>
 	options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
-builder.Services.AddScoped<IKoiFishService, KoiFishService>();
-builder.Services.AddScoped<IKoiFishRepository, KoiFishRepository>();
 builder.Services.AddDbContext<KoiFarmShopContext>();
 
 var app = builder.Build();
