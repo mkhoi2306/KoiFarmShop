@@ -43,4 +43,10 @@ public class KoiFishRepository : IKoiFishRepository
             await _context.SaveChangesAsync();
         }
     }
+
+    public long GetnextKoiFishId()
+    {
+        var maxId = _context.KoiFishes.Max(k => (long?)k.KoiFishId) ?? 0;
+        return maxId + 1;
+    }
 }

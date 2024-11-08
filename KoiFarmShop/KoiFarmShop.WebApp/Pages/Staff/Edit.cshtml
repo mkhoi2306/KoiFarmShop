@@ -5,83 +5,95 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>KoiFish</h4>
+<h4>Edit KoiFish</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="KoiFish.KoiFishId" />
+
             <div class="form-group">
-                <label asp-for="KoiFish.Name" class="control-label"></label>
-                <input asp-for="KoiFish.Name" class="form-control" />
-                <span asp-validation-for="KoiFish.Name" class="text-danger"></span>
+                <label for="koiName">Koi Fish Name</label>
+                <input type="text" id="koiName" name="KoiFish.Name" class="form-control" value="@Model.KoiFish.Name" required />
             </div>
+
+            <!-- Category Dropdown -->
             <div class="form-group">
-                <label asp-for="KoiFish.CategoryId" class="control-label"></label>
-                <select asp-for="KoiFish.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="KoiFish.CategoryId" class="text-danger"></span>
+                <label for="categoryId">Category</label>
+                <select id="categoryId" name="KoiFish.CategoryId" class="form-control" required>
+                    <option value="">Select Category</option>
+                    @if (ViewData["CategoryId"] is IEnumerable<SelectListItem> categories)
+                    {
+                    foreach (var category in categories)
+                    {
+                    if (Model.KoiFish.CategoryId == Convert.ToInt64(category.Value))
+                    {
+                    <option value="@category.Value" selected>@category.Text</option>
+                    }
+                    else
+                    {
+                    <option value="@category.Value">@category.Text</option>
+                    }
+                    }
+                    }
+                </select>
             </div>
+
+            <!-- Size Dropdown -->
             <div class="form-group">
-                <label asp-for="KoiFish.SizeId" class="control-label"></label>
-                <select asp-for="KoiFish.SizeId" class="form-control" asp-items="ViewBag.SizeId"></select>
-                <span asp-validation-for="KoiFish.SizeId" class="text-danger"></span>
+                <label for="sizeId">Size</label>
+                <select id="sizeId" name="KoiFish.SizeId" class="form-control" required>
+                    <option value="">Select Size</option>
+                    @if (ViewData["SizeId"] is IEnumerable<SelectListItem> sizes)
+                    {
+                    foreach (var size in sizes)
+                    {
+                    if (Model.KoiFish.SizeId == Convert.ToInt64(size.Value))
+                    {
+                    <option value="@size.Value" selected>@size.Text</option>
+                    }
+                    else
+                    {
+                    <option value="@size.Value">@size.Text</option>
+                    }
+                    }
+                    }
+                </select>
             </div>
+
+
+
+            <!-- Description -->
             <div class="form-group">
-                <label asp-for="KoiFish.Description" class="control-label"></label>
-                <input asp-for="KoiFish.Description" class="form-control" />
-                <span asp-validation-for="KoiFish.Description" class="text-danger"></span>
+                <label for="description">Description</label>
+                <textarea id="description" name="KoiFish.Description" class="form-control" required>@Model.KoiFish.Description</textarea>
             </div>
+
+            <!-- Date of Birth -->
             <div class="form-group">
-                <label asp-for="KoiFish.Dob" class="control-label"></label>
-                <input asp-for="KoiFish.Dob" class="form-control" />
-                <span asp-validation-for="KoiFish.Dob" class="text-danger"></span>
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="KoiFish.Dob" class="form-control" value="@Model.KoiFish.Dob?.ToString("yyyy-MM-dd")" />
             </div>
+
+            <!-- Price -->
             <div class="form-group">
-                <label asp-for="KoiFish.Price" class="control-label"></label>
-                <input asp-for="KoiFish.Price" class="form-control" />
-                <span asp-validation-for="KoiFish.Price" class="text-danger"></span>
+                <label for="price">Price</label>
+                <input type="number" id="price" name="KoiFish.Price" class="form-control" value="@Model.KoiFish.Price" step="0.01" />
             </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.Origin" class="control-label"></label>
-                <input asp-for="KoiFish.Origin" class="form-control" />
-                <span asp-validation-for="KoiFish.Origin" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.Gender" class="control-label"></label>
-                <input asp-for="KoiFish.Gender" class="form-control" />
-                <span asp-validation-for="KoiFish.Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.CreatedBy" class="control-label"></label>
-                <input asp-for="KoiFish.CreatedBy" class="form-control" />
-                <span asp-validation-for="KoiFish.CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.UpdateBy" class="control-label"></label>
-                <input asp-for="KoiFish.UpdateBy" class="form-control" />
-                <span asp-validation-for="KoiFish.UpdateBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.CreateDate" class="control-label"></label>
-                <input asp-for="KoiFish.CreateDate" class="form-control" />
-                <span asp-validation-for="KoiFish.CreateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.UpdateDate" class="control-label"></label>
-                <input asp-for="KoiFish.UpdateDate" class="form-control" />
-                <span asp-validation-for="KoiFish.UpdateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KoiFish.IsDeleted" class="control-label"></label>
-                <input asp-for="KoiFish.IsDeleted" class="form-control" />
-                <span asp-validation-for="KoiFish.IsDeleted" class="text-danger"></span>
-            </div>
+
+            <label for="statusConsignment" class="form-label me-2 mb-0">Type:</label>
+            <select name="statusConsignment" id="statusConsignment" class="form-select w-auto me-2">
+                <option value="ALL">Tất cả</option>
+                <option value="PENDING">Kohaku</option>
+                <option value="REJECTED">Sanke</option>
+                <option value="APPROVED">Showa</option>
+                <option value="CONFIRMED">Ogon</option>
+                <option value="CANCELLED">Chagoi</option>
+            </select>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+            
         </form>
     </div>
 </div>
