@@ -34,13 +34,18 @@ namespace KoiFarmShop.Repository.Repositories
 
         public async Task<Customer> GetCustomerByUserId(long userId)
         {
-            var exitUser = await _context.Users.Include(u => u.Customers).FirstOrDefaultAsync(u => u.UserId ==userId);
-            if ((exitUser != null))
+            // Lấy user và bao gồm khách hàng liên quan
+            var exitUser = await _context.Users.Include(u => u.Customers)
+                .FirstOrDefaultAsync(u => u.UserId == userId);
+
+            // Nếu user tồn tại và có khách hàng
+            if (exitUser != null && exitUser.Customers.Any())
             {
-                var customer = exitUser.Customers.FirstOrDefault();
+                var customer = exitUser.Customers.FirstOrDefault(); // Lấy khách hàng đầu tiên
                 return customer;
             }
 
+            // Nếu không tìm thấy người dùng hoặc không có khách hàng
             return null;
         }
 
@@ -70,6 +75,7 @@ namespace KoiFarmShop.Repository.Repositories
                 await _context.SaveChangesAsync();
                 return true;
             }
+
             return false;
         }
 
@@ -91,6 +97,7 @@ namespace KoiFarmShop.Repository.Repositories
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }
+
         public async Task<User> GetUserByIdAsync(long id)
         {
             return await _context.Users.FindAsync(id);
@@ -98,7 +105,6 @@ namespace KoiFarmShop.Repository.Repositories
 
         public async Task<bool> DeleteAsync(long id)
         {
-            
             var user = await _context.Users.FindAsync(id);
             if (user != null)
             {
@@ -106,6 +112,7 @@ namespace KoiFarmShop.Repository.Repositories
                 await _context.SaveChangesAsync();
                 return true;
             }
+
             return false;
         }
     }

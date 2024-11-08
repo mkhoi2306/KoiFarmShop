@@ -4,34 +4,45 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
     ViewData["Title"] = "Koi Fish Details";
 }
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
 <div class="container py-5">
     <div class="row align-items-center">
+        
         <!-- Koi Fish Image -->
         <div class="col-md-6 mb-4">
-            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.KoiFish.ImageData)" class="img-fluid rounded shadow-lg" alt="Koi Fish Image" style="max-height: 500px; object-fit: cover;" />
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.KoiFish.ImageData)" class="img-fluid rounded shadow-lg" alt="Koi Fish Image" style="max-height: 500px; object-fit: cover;"/>
         </div>
 
         <!-- Koi Fish Details -->
-        <div class="col-md-6 mb-4">
-            <!-- Mô tả chi tiết -->
-            <h4 class="mb-3">Details</h4>
-            <div class="list-group">
-                <p class="list-group-item"><strong>Koi Name:</strong> @Model.KoiFish.Name</p>
-                <p class="list-group-item"><strong>Description:</strong> @Model.KoiFish.Description</p>
-                <p class="list-group-item"><strong>Date of Birth:</strong> @Model.KoiFish.Dob.ToString()</p>
-                <p class="list-group-item"><strong>Price:</strong> @Model.KoiFish.Price.ToString() VND</p>
-                <p class="list-group-item"><strong>Type:</strong> @Model.KoiFish.Type</p>
-            </div>
-
-            <div class="mt-4">
-                <form method="post">
-                    <button class="btn btn-lg btn-primary w-100 shadow-lg rounded-pill hover-shadow" name="handler" value="AddToCart"
-                            onclick="addToCart(@Model.KoiFish.KoiFishId)">
-                        Add to Cart
-                    </button>
+        @if (Model.KoiFish != null)
+        {
+            <div class="col-md-6 mb-4">
+                <!-- Mô tả chi tiết -->
+                <h4 class="mb-3">Details</h4>
+                <div class="list-group">
+                    <p class="list-group-item"><strong>Koi Name:</strong> @Model.KoiFish.Name</p>
+                    <p class="list-group-item"><strong>Description:</strong> @Model.KoiFish.Description</p>
+                    <p class="list-group-item"><strong>Date of Birth:</strong> @Model.KoiFish.Dob.ToString()</p>
+                    <p class="list-group-item"><strong>Price:</strong> @Model.KoiFish.Price.ToString() VND</p>
+                    <p class="list-group-item"><strong>Type:</strong> @Model.KoiFish.Type</p>
+                </div>
+            
+                <form method="post" asp-page-handler="AddToCart(@Model.KoiFish.KoiFishId)">
+                    <input type="hidden" asp-for="@Model.KoiFish.KoiFishId" />               
+                    <button class="btn btn-primary w-100">Add to Cart</button>
                 </form>
             </div>
-        </div>
+        }
+        else
+        {
+            <p>Something went wrong...</p>
+        }
+        
     </div>
 
     <!-- Tên cá koi ở dưới cùng -->
