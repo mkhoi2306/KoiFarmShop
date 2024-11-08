@@ -10,8 +10,11 @@ namespace KoiFarmShop.Service.IServices
 {
     public interface IKoiOrderService
     {
-        Task<KoiOrder> CreateOrderAsync(long customerId, List<CartItem> cartItems, string createdBy);
+        Task<long> CreateOrderAsync(KoiOrder order);
         Task<KoiOrder> GetOrderAsync(long orderId);
         Task<KoiOrder> CancelOrderAsync(long orderId, string cancelledBy);
+        
+        Task<List<KoiOrder>> GetAllOrdersByAccountAsync(long customerId);
+        Task<List<KoiOrderDetail>> GetKoiOrderDetailsByOrderIdsAsync(List<long> koiOrderIds);
     }
 }

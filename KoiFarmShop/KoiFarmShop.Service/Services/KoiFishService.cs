@@ -17,7 +17,7 @@ public class KoiFishService : IKoiFishService
         return await _koiFishRepository.GetAllAsync();
     }
 
-    public async Task<KoiFish> GetKoiFishByIdAsync(long id)
+    public async Task<KoiFish> GetKoiFishByIdAsync(long? id)
     {
         return await _koiFishRepository.GetByIdAsync(id);
     }
