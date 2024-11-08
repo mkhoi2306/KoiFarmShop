@@ -58,7 +58,7 @@ namespace KoiFarmShop.WebApp.Pages.Staff
 				koiFish.ImageData = koiImage;
 				koiFish.Type = Request.Form["statusConsignment"];
 				await _koiFishService.AddKoiFishAsync(koiFish);
-				return RedirectToPage("/Index");
+				return RedirectToPage("/Staff/Index");
             {
             }
 			}
@@ -67,12 +67,10 @@ namespace KoiFarmShop.WebApp.Pages.Staff
 				ModelState.AddModelError("KoiImage", "Please upload an image.");
 				return Page();
 			}
-
-			// Lưu thông tin KoiFish vào cơ sở dữ liệu thông qua service
+			
 			await _koiFishService.AddKoiFishAsync(koiFish);
-
-			// Điều hướng lại trang danh sách KoiFish
-			return RedirectToPage("/Index");
+			
+			return RedirectToPage("/Staff/Index");
 		}
 
 		private long GetKoiFishID()

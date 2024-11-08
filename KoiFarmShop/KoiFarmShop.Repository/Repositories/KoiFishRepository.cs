@@ -17,7 +17,7 @@ public class KoiFishRepository : IKoiFishRepository
         return await _context.KoiFishes.ToListAsync();
     }
 
-    public async Task<KoiFish> GetByIdAsync(int id)
+    public async Task<KoiFish> GetByIdAsync(long id)
     {
         return await _context.KoiFishes.FindAsync(id);
     }

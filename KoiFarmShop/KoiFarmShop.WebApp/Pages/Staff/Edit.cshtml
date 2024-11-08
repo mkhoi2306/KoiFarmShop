@@ -17,52 +17,6 @@
                 <input type="text" id="koiName" name="KoiFish.Name" class="form-control" value="@Model.KoiFish.Name" required />
             </div>
 
-            <!-- Category Dropdown -->
-            <div class="form-group">
-                <label for="categoryId">Category</label>
-                <select id="categoryId" name="KoiFish.CategoryId" class="form-control" required>
-                    <option value="">Select Category</option>
-                    @if (ViewData["CategoryId"] is IEnumerable<SelectListItem> categories)
-                    {
-                    foreach (var category in categories)
-                    {
-                    if (Model.KoiFish.CategoryId == Convert.ToInt64(category.Value))
-                    {
-                    <option value="@category.Value" selected>@category.Text</option>
-                    }
-                    else
-                    {
-                    <option value="@category.Value">@category.Text</option>
-                    }
-                    }
-                    }
-                </select>
-            </div>
-
-            <!-- Size Dropdown -->
-            <div class="form-group">
-                <label for="sizeId">Size</label>
-                <select id="sizeId" name="KoiFish.SizeId" class="form-control" required>
-                    <option value="">Select Size</option>
-                    @if (ViewData["SizeId"] is IEnumerable<SelectListItem> sizes)
-                    {
-                    foreach (var size in sizes)
-                    {
-                    if (Model.KoiFish.SizeId == Convert.ToInt64(size.Value))
-                    {
-                    <option value="@size.Value" selected>@size.Text</option>
-                    }
-                    else
-                    {
-                    <option value="@size.Value">@size.Text</option>
-                    }
-                    }
-                    }
-                </select>
-            </div>
-
-
-
             <!-- Description -->
             <div class="form-group">
                 <label for="description">Description</label>
