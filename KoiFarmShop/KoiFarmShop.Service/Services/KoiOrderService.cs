@@ -20,6 +20,38 @@ namespace KoiFarmShop.Service.Services
             _orderRepository = orderRepository;
         }
 
+        public async Task<KoiOrder> CancelOrderAsync(long orderId, string cancelledBy)
+        {
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+
+            if (order == null)
+            {
+                throw new Exception("Order not found");
+            }
+
+            // Kiểm tra xem order có thể hủy không
+            if ((bool)order.IsDeleted)
+            {
+                throw new Exception("Order already cancelled");
+            }
+
+            // Cập nhật trạng thái order
+            order.IsDeleted = true;
+            order.UpdatedDate = DateTime.UtcNow;
+            order.UpdatedBy = cancelledBy;
+
+            // Cập nhật trạng thái của tất cả order details
+            foreach (var orderDetail in order.KoiOrderDetails)
+            {
+                orderDetail.IsDeleted = true;
+                orderDetail.UpdatedDate = DateTime.UtcNow;
+                orderDetail.UpdatedBy = cancelledBy;
+            }
+
+            // Lưu các thay đổi
+            return await _orderRepository.UpdateOrderAsync(order);
+        }
+
         public async Task<KoiOrder> CreateOrderAsync(long customerId, List<CartItem> cartItems, string createdBy)
         {
             double totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
