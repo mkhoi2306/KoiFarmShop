@@ -1,0 +1,31 @@
+﻿@page
+@model KoiFarmShop.WebApp.Pages.Admin.ViewAllUserModel
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<h2>User Management</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a asp-page="/Admin/EditUser" asp-route-id="@user.UserId">Edit</a> |
+                    <a asp-page="/Admin/DeleteUser" asp-route-id="@user.UserId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page="/Admin/CreateUser">Create New User</a>

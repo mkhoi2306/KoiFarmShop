@@ -1,0 +1,23 @@
+﻿@page
+@model KoiFarmShop.WebApp.Pages.Admin.EditUserModel
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<h2>Edit User</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="EditUser.UserName"></label>
+        <input asp-for="EditUser.UserName" class="form-control" />
+        <span asp-validation-for="EditUser.UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EditUser.Email"></label>
+        <input asp-for="EditUser.Email" class="form-control" />
+        <span asp-validation-for="EditUser.Email" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+
+<a asp-page="/Admin/ViewAllUser" class="btn btn-secondary">Back to list</a>

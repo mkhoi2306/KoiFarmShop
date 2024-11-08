@@ -42,5 +42,28 @@ namespace KoiFarmShop.Service.Services
         {
             return _userRepository.ResetPasswordForCustomer(user);
         }
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            return await _userRepository.GetAllAsync();
+        }
+
+        public async Task<User> CreateUserAsync(User user)
+        {
+            return await _userRepository.CreateAccountAsync(user);
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            await _userRepository.UpdateAsync(user);
+        }
+        public async Task<User> GetUserByIdAsync(long id)
+        {
+            return await _userRepository.GetUserByIdAsync(id);
+        }
+        public async Task<bool> DeleteUserAsync(int id)
+        {
+            return await _userRepository.DeleteAsync(id);
+        }
+
     }
 }
