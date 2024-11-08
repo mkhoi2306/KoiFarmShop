@@ -56,7 +56,7 @@ namespace KoiFarmShop.WebApp.Pages.Staff
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Staff/Index");
         }
     }
 }
