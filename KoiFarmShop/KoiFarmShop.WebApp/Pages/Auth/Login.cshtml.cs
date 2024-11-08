@@ -19,6 +19,7 @@ namespace KoiFarmShop.WebApp.Pages.Auth
         {
             this._userService = userService;
         }
+
         public void OnGet()
         {
         }
@@ -30,36 +31,43 @@ namespace KoiFarmShop.WebApp.Pages.Auth
             if (user == null)
             {
                 ValidateErrors["email"] = "Tài khoản không tồn tại";
-
             }
             else if (user.Password != Request.Form["password"])
             {
                 ValidateErrors["password"] = "Password không đúng!!!";
-
             }
             else
             {
                 var claims = new List<Claim>
                 {
-               new Claim("userId", user.UserId.ToString()),
-               new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role)
-};
+                    new Claim("userId", user.UserId.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.Role)
+                };
 
-                var claimsIdentity = new ClaimsIdentity(claims, "Login");
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+            
                 if (user.Role == "Customer")
                 {
                     Customer customer = await _userService.GetCustomerByUser(user.UserId);
                     if (customer != null)
                     {
                         claims.Add(new Claim("customerId", customer.CustomerId.ToString()));
-                        return RedirectToPage("/Index");
                     }
-                    return Page();
+                    else
+                    {
+                        return Page();
+                    }
+                }
+
+                // Khởi tạo ClaimsIdentity và ClaimsPrincipal sau khi thêm tất cả claims
+                var claimsIdentity = new ClaimsIdentity(claims, "Login");
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+
+                if (user.Role == "Customer")
+                {
+                    return RedirectToPage("/Index");
                 }
                 else if (user.Role == "Staff")
                 {
@@ -67,9 +75,10 @@ namespace KoiFarmShop.WebApp.Pages.Auth
                 }
                 else if (user.Role == "Admin")
                 {
-                    return Page();
+                    return RedirectToPage("/Staff/ViewAllUser");
                 }
             }
+
             return Page();
         }
     }
