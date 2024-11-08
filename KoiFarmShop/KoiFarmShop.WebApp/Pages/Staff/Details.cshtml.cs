@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiFarmShop.Repository.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KoiFarmShop.WebApp.Pages.Staff
 {
-    public class DetailsModel : PageModel
+	[Authorize(Roles = "Staff")]
+	public class DetailsModel : PageModel
     {
         private readonly KoiFarmShopContext _context;
 

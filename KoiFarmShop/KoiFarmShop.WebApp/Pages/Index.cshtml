@@ -1,91 +1,91 @@
 ﻿@page
 @model IndexModel
 @{
-    Layout = "~/Pages/Shared/_Layout.cshtml";
-    ViewData["Title"] = "HomePage";
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+	ViewData["Title"] = "HomePage";
 }
 <div id="koiCarousel" class="carousel slide container my-4" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="./images/ad266828d2d27c08bd5da13659b30df9.jpg" class="d-block w-100" alt="Red Japanese KOI Fish" style="height: 500px" />
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Red Japanese KOI Fish</h5>
-                <p>High quality and beautiful, suitable for large fish tanks.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="./images/3549faba40c2d5f367c3a8cf9e526c92.jpg" class="d-block w-100" alt="Yellow Japanese KOI Fish" style="height: 500px" />
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Yellow Japanese KOI Fish</h5>
-                <p>Bright yellow color, symbolizing prosperity.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="./images/acf8c9c2e8fd292894d032d827114a55.jpg" class="d-block w-100" alt="White Japanese KOI Fish" style="height: 500px" />
-            <div class="carousel-caption d-none d-md-block">
-                <h5>White Japanese KOI Fish</h5>
-                <p>Elegant and luxurious look for your pond.</p>
-            </div>
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#koiCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#koiCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<img src="./images/ad266828d2d27c08bd5da13659b30df9.jpg" class="d-block w-100" alt="Red Japanese KOI Fish" style="height: 500px" />
+			<div class="carousel-caption d-none d-md-block">
+				<h5>Red Japanese KOI Fish</h5>
+				<p>High quality and beautiful, suitable for large fish tanks.</p>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<img src="./images/3549faba40c2d5f367c3a8cf9e526c92.jpg" class="d-block w-100" alt="Yellow Japanese KOI Fish" style="height: 500px" />
+			<div class="carousel-caption d-none d-md-block">
+				<h5>Yellow Japanese KOI Fish</h5>
+				<p>Bright yellow color, symbolizing prosperity.</p>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<img src="./images/acf8c9c2e8fd292894d032d827114a55.jpg" class="d-block w-100" alt="White Japanese KOI Fish" style="height: 500px" />
+			<div class="carousel-caption d-none d-md-block">
+				<h5>White Japanese KOI Fish</h5>
+				<p>Elegant and luxurious look for your pond.</p>
+			</div>
+		</div>
+	</div>
+	<button class="carousel-control-prev" type="button" data-bs-target="#koiCarousel" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#koiCarousel" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</button>
 </div>
 
 <!-- Divider -->
 <div class="container pt-5">
-    <div class="d-flex align-items-center justify-content-center">
-        <hr class="divider col-md-5" />
-        <span class="col-md-2 text-center fw-bold fs-5">Featured KOI Fish</span>
-        <hr class="divider col-md-5" />
-    </div>
+	<div class="d-flex align-items-center justify-content-center">
+		<hr class="divider col-md-5" />
+		<span class="col-md-2 text-center fw-bold fs-5">Featured KOI Fish</span>
+		<hr class="divider col-md-5" />
+	</div>
 </div>
 
 <!-- Search & Filter -->
 <div class="container my-4">
-    <div class="d-flex justify-content-between">
-        <div class="col-md-4">
-            <select class="form-select" aria-label="Filter">
-                <option selected>Filter by type</option>
-                <option value="1">Red KOI Fish</option>
-                <option value="2">Yellow KOI Fish</option>
-                <option value="3">White KOI Fish</option>
-            </select>
-        </div>
-        <div style="width: 500px" class="row">
-            <div class="col-md-9">
-                <input type="text" class="form-control" placeholder="Search KOI fish..." aria-label="Search" />
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-outline-secondary w-100">Search</button>
-            </div>
-        </div>
-    </div>
+	<div class="d-flex justify-content-between">
+		<div class="col-md-4">
+			<select class="form-select" aria-label="Filter">
+				<option selected>Filter by type</option>
+				<option value="1">Red KOI Fish</option>
+				<option value="2">Yellow KOI Fish</option>
+				<option value="3">White KOI Fish</option>
+			</select>
+		</div>
+		<div style="width: 500px" class="row">
+			<div class="col-md-9">
+				<input type="text" class="form-control" placeholder="Search KOI fish..." aria-label="Search" />
+			</div>
+			<div class="col-md-3">
+				<button class="btn btn-outline-secondary w-100">Search</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Koi List -->
 <div class="container">
-    <div class="row">
-        @foreach (var koiFish in Model.KoiFishList)
-        {
-            <div class="col-md-3">
-                <div class="card product-card">
-                    <a href="/KoiFishDetail?id=@koiFish.KoiFishId" class="text-decoration-none text-dark">
-                        <img src="@koiFish.ImageUrl" class="card-img-top" alt="KOI Fish" style="height: 400px" />
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">@koiFish.Name</h5>
-                        <p class="card-text">Price: @koiFish.Price?.ToString("N0") VND</p>
-                        <button class="btn btn-primary w-100">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+	<div class="row">
+		@foreach (var koiFish in Model.KoiFishList)
+		{
+			<div class="col-md-3">
+				<div class="card product-card">
+					<a href="/KoiFishDetail/@koiFish.KoiFishId" class="text-decoration-none text-dark">
+						<img src="@koiFish.ImageUrl" class="card-img-top" alt="KOI Fish" style="height: 400px" />
+					</a>
+					<div class="card-body">
+						<h5 class="card-title">@koiFish.Name</h5>
+						<p class="card-text">Price: @koiFish.Price?.ToString("N0") VND</p>
+						<a href="/KoiFishDetail/@koiFish.KoiFishId" class="text-decoration-none text-dark">View Detail</a>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
 </div>

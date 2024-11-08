@@ -2,57 +2,82 @@
 @model KoiFarmShop.WebApp.Pages.Staff.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Edit";
+	Layout = "~/Pages/Shared/_StaffLayout.cshtml";
 }
-
-<h4>Edit KoiFish</h4>
+<h4 class="mb-4">Edit Koi Fish</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="row justify-content-center">
+	<div class="col-md-8 col-lg-6">
+		<form method="post" enctype="multipart/form-data">
+			<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-            <div class="form-group">
-                <label for="koiName">Koi Fish Name</label>
-                <input type="text" id="koiName" name="KoiFish.Name" class="form-control" value="@Model.KoiFish.Name" required />
-            </div>
+			<input type="hidden" name="koiFishId" value="@Model.KoiFish.KoiFishId" />
 
-            <!-- Description -->
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="KoiFish.Description" class="form-control" required>@Model.KoiFish.Description</textarea>
-            </div>
+			<!-- Koi Fish Name -->
+			<div class="form-group mb-3">
+				<label for="koiName" class="form-label">Koi Fish Name</label>
+				<input type="text" id="koiName" asp-for="@Model.KoiFish.Name" name="KoiFish.Name" class="form-control" value="@Model.KoiFish.Name" required />
+			</div>
 
-            <!-- Date of Birth -->
-            <div class="form-group">
-                <label for="dob">Date of Birth</label>
-                <input type="date" id="dob" name="KoiFish.Dob" class="form-control" value="@Model.KoiFish.Dob?.ToString("yyyy-MM-dd")" />
-            </div>
+			<div class="form-group mb-3">
+				<label for="koiImage" class="form-label">Koi Image</label>
+				<input type="file" asp-for="@Model.KoiImage" id="koiImage" class="form-control" />
+				@if (Model.KoiFish.ImageData != null && Model.KoiFish.ImageData.Length > 0)
+				{
+					<img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.KoiFish.ImageData)" class="img-fluid mb-3" alt="Koi Image" style="max-width: 100%; height: auto; border-radius: 8px;" />
+				}
+			</div>
+			<!-- Description -->
+			<div class="form-group mb-3">
+				<label for="description" class="form-label">Description</label>
+				<textarea id="description" asp-for="@Model.KoiFish.Description" name="KoiFish.Description" class="form-control" required>@Model.KoiFish.Description</textarea>
+			</div>
 
-            <!-- Price -->
-            <div class="form-group">
-                <label for="price">Price</label>
-                <input type="number" id="price" name="KoiFish.Price" class="form-control" value="@Model.KoiFish.Price" step="0.01" />
-            </div>
+			<!-- Date of Birth -->
+			<div class="form-group mb-3">
+				<label for="dob" class="form-label">Date of Birth</label>
+				<input type="date" id="dob" asp-for="@Model.KoiFish.Dob" name="KoiFish.Dob" class="form-control" value="@Model.KoiFish.Dob?.ToString("yyyy-MM-dd")" />
+			</div>
 
-            <label for="statusConsignment" class="form-label me-2 mb-0">Type:</label>
-            <select name="statusConsignment" id="statusConsignment" class="form-select w-auto me-2">
-                <option value="ALL">Tất cả</option>
-                <option value="PENDING">Kohaku</option>
-                <option value="REJECTED">Sanke</option>
-                <option value="APPROVED">Showa</option>
-                <option value="CONFIRMED">Ogon</option>
-                <option value="CANCELLED">Chagoi</option>
-            </select>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-            
-        </form>
-    </div>
+			<!-- Price -->
+			<div class="form-group mb-3">
+				<label for="price" class="form-label">Price</label>
+				<input type="number" id="price" asp-for="@Model.KoiFish.Price" name="KoiFish.Price" class="form-control" value="@Model.KoiFish.Price" step="0.01" />
+			</div>
+
+			<!-- Gender -->
+			<div class="form-group mb-3">
+				<label for="gender" class="form-label">Gender</label>
+				<select asp-for="@Model.KoiFish.Gender" name="gender" id="gender" class="form-select">
+					<option value="ALL" selected="@(Model.KoiFish.Gender == "ALL" ? "selected" : "")">All</option>
+					<option value="Male" selected="@(Model.KoiFish.Gender == "Male" ? "selected" : "")">Male</option>
+					<option value="Female" selected="@(Model.KoiFish.Gender == "Female" ? "selected" : "")">Female</option>
+				</select>
+			</div>
+
+			<!-- Type -->
+			<div class="form-group mb-3">
+				<label for="type" class="form-label">Type</label>
+				<select asp-for="@Model.KoiFish.Type" name="type" id="type" class="form-select">
+					<option value="ALL" selected="@(Model.KoiFish.Type == "ALL" ? "selected" : "")">All</option>
+					<option value="Kohaku" selected="@(Model.KoiFish.Type == "Kohaku" ? "selected" : "")">Kohaku</option>
+					<option value="Sanke" selected="@(Model.KoiFish.Type == "Sanke" ? "selected" : "")">Sanke</option>
+					<option value="Showa" selected="@(Model.KoiFish.Type == "Showa" ? "selected" : "")">Showa</option>
+					<option value="Ogon" selected="@(Model.KoiFish.Type == "Ogon" ? "selected" : "")">Ogon</option>
+					<option value="Chagoi" selected="@(Model.KoiFish.Type == "Chagoi" ? "selected" : "")">Chagoi</option>
+				</select>
+			</div>
+
+			<!-- Save Button -->
+			<div class="form-group mb-3">
+				<button type="submit" class="btn btn-primary w-100">Save</button>
+			</div>
+
+		</form>
+	</div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
+<div class="text-center mt-4">
+	<a asp-page="Index" class="btn btn-outline-secondary">Back to List</a>
 </div>
-

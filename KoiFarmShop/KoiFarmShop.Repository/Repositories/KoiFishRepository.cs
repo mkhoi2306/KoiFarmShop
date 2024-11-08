@@ -30,8 +30,20 @@ public class KoiFishRepository : IKoiFishRepository
 
     public async Task UpdateAsync(KoiFish koiFish)
     {
-        _context.KoiFishes.Update(koiFish);
-        await _context.SaveChangesAsync();
+        var existKoiFish = await _context.KoiFishes.FirstOrDefaultAsync(k => k.KoiFishId == koiFish.KoiFishId);
+        if(existKoiFish !=null)
+        {
+            existKoiFish.Name = koiFish.Name;
+            existKoiFish.Description = koiFish.Description;
+            existKoiFish.Dob = koiFish.Dob;
+            existKoiFish.Price = koiFish.Price;
+            existKoiFish.Gender = koiFish.Gender;
+            existKoiFish.UpdateDate = koiFish.UpdateDate;
+            existKoiFish.ImageData = koiFish.ImageData;
+            existKoiFish.Type = koiFish.Type;
+            _context.KoiFishes.Update(existKoiFish);
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task DeleteAsync(int id)
