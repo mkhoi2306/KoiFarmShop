@@ -67,16 +67,20 @@
                     </li>
 
                     <!-- Conditional Login/Logout Button -->
-                    @if (User.Identity.IsAuthenticated)
+                    @if (!User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                            <a class="nav-link" href="/Auth/Login"><i class="bi bi-box-arrow-right"></i> Login</a>
                         </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="/Auth/Login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                            <form method="post" asp-page="/Logout">
+                                <button type="submit" class="btn btn-link nav-link" style="color: white;">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </button>
+                            </form>
                         </li>
                     }
                 </ul>

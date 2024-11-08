@@ -75,7 +75,7 @@ namespace KoiFarmShop.WebApp.Pages.Auth
                 }
                 else if (user.Role == "Admin")
                 {
-                    return RedirectToPage("/Staff/ViewAllUser");
+                    return RedirectToPage("/Admin/ViewAllUser");
                 }
             }
 
