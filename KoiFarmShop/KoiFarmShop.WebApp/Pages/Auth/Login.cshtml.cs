@@ -41,9 +41,9 @@ namespace KoiFarmShop.WebApp.Pages.Auth
             {
                 var claims = new List<Claim>
                 {
-    new Claim("userId", user.UserId.ToString()),
-    new Claim(ClaimTypes.Email, user.Email),
-    new Claim(ClaimTypes.Role, user.Role)
+               new Claim("userId", user.UserId.ToString()),
+               new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role)
 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, "Login");
@@ -54,9 +54,9 @@ namespace KoiFarmShop.WebApp.Pages.Auth
                 if (user.Role == "Customer")
                 {
                     Customer customer = await _userService.GetCustomerByUser(user.UserId);
-                    if(customer != null)
+                    if (customer != null)
                     {
-                       claims.Add(new Claim("customerId", customer.CustomerId.ToString()));
+                        claims.Add(new Claim("customerId", customer.CustomerId.ToString()));
                         return RedirectToPage("/Index");
                     }
                     return Page();
