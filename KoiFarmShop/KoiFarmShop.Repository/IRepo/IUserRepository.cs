@@ -25,6 +25,8 @@ namespace KoiFarmShop.Repository.IRepo
         Task<bool> DeleteAsync(long userId);
 
         Task<IEnumerable<User>> GetAllAsync();
+
+        Task<Customer> GetCustomerByUserId(long userId);
     }
 
 }

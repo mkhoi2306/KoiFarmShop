@@ -23,6 +23,11 @@ namespace KoiFarmShop.Service.Services
             return await _userRepository.CreateAccountForGuest(user);
         }
 
+        public async Task<Customer> GetCustomerByUser(long userId)
+        {
+            return await _userRepository.GetCustomerByUserId(userId);
+        }
+
         public long GetNextUserId()
         {
             return _userRepository.GetNextUserId();

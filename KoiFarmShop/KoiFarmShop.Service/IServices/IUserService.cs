@@ -23,5 +23,7 @@ namespace KoiFarmShop.Service.IServices
         Task UpdateUserAsync(User user);
         Task<User> GetUserByIdAsync(long id);
         Task<bool> DeleteUserAsync(int id);
+
+        Task<Customer> GetCustomerByUser(long userId);  
     }
 }
