@@ -25,6 +25,10 @@ builder.Services.AddScoped<IKoiFishService, KoiFishService>();
 
 builder.Services.AddScoped<IKoiFishRepository, KoiFishRepository>();
 
+builder.Services.AddScoped<IKoiOrderService, KoiOrderService>();
+
+builder.Services.AddScoped<IKoiOrderRepository, KoiOrderRepository>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>
 	{
