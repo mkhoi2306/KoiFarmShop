@@ -70,8 +70,7 @@ namespace KoiFarmShop.WebApp.Pages.Staff
 				ModelState.AddModelError("KoiImage", "Please upload an image.");
 				return Page();  // Quay l?i trang n?u không có ?nh
 			}
-	
-			return Page();
+
 		}
 	}
 }
