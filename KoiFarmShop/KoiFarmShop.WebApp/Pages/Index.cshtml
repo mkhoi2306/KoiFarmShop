@@ -72,25 +72,18 @@
 <!-- Koi List -->
 <div class="container">
     <div class="row">
+        @foreach (var koiFish in Model.KoiFishList)
+        {
         <div class="col-md-3">
             <div class="card product-card">
-                <img src="https://i.pinimg.com/236x/7c/6b/f3/7c6bf33646dd4c729f053622eaa93dd8.jpg" class="card-img-top" alt="KOI Fish" style="height: 400px" />
+                <img src="@koiFish.ImageUrl" class="card-img-top" alt="KOI Fish" style="height: 400px" />
                 <div class="card-body">
-                    <h5 class="card-title">Utsurimono KOI</h5>
-                    <p class="card-text">Price: 500,000 VND</p>
+                    <h5 class="card-title">@koiFish.Name</h5>
+                    <p class="card-text">Price: @koiFish.Price?.ToString("N0") VND</p>
                     <button class="btn btn-primary w-100">Add to Cart</button>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card product-card">
-                <img src="https://i.pinimg.com/736x/2f/5d/37/2f5d37a072bf7e0fcb25fb202bc07a2a.jpg" class="card-img-top" alt="KOI Fish" style="height: 400px" />
-                <div class="card-body">
-                    <h5 class="card-title">Kinginrin KOI</h5>
-                    <p class="card-text">Price: 700,000 VND</p>
-                    <button class="btn btn-primary w-100">Add to Cart</button>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </div>

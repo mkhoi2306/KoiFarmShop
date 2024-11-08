@@ -57,8 +57,7 @@ namespace KoiFarmShop.WebApp.Pages.Staff
 				koiFish.ImageData = koiImage;
 				koiFish.ImageData = koiImage;
 				koiFish.Type = Request.Form["statusConsignment"];
-				_context.KoiFishes.Add(koiFish);
-				_context.SaveChanges();
+				await _koiFishService.AddKoiFishAsync(koiFish);
 				return RedirectToPage("/Index");
             {
             }

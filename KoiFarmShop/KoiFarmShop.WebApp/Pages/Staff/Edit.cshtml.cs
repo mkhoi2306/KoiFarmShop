@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiFarmShop.Repository.Models;
+using KoiFarmShop.Service;
 
 namespace KoiFarmShop.WebApp.Pages.Staff
 {
     public class EditModel : PageModel
     {
         private readonly KoiFarmShop.Repository.Models.KoiFarmShopContext _context;
-
-        public EditModel(KoiFarmShop.Repository.Models.KoiFarmShopContext context)
+        private readonly IKoiFishService _koiFishService;
+        public EditModel(KoiFarmShop.Repository.Models.KoiFarmShopContext context, IKoiFishService koiFishService)
         {
             _context = context;
+            _koiFishService = koiFishService;
         }
 
         [BindProperty]
@@ -35,13 +37,10 @@ namespace KoiFarmShop.WebApp.Pages.Staff
                 return NotFound();
             }
             KoiFish = koifish;
-           ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
-           ViewData["SizeId"] = new SelectList(_context.Sizes, "SizeId", "SizeId");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
+            ViewData["SizeId"] = new SelectList(_context.Sizes, "SizeId", "SizeId");
             return Page();
         }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -67,7 +66,9 @@ namespace KoiFarmShop.WebApp.Pages.Staff
                 }
             }
 
-            return RedirectToPage("./Index");
+            await _koiFishService.UpdateKoiFishAsync(KoiFish);
+            return RedirectToPage("/Index");
+            
         }
 
         private bool KoiFishExists(long id)
