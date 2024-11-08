@@ -18,6 +18,11 @@ namespace KoiFarmShop.Service.IServices
         long GetNextUserId();
 
         Task<bool> ResetPassword(User user);
+        Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<User> CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task<User> GetUserByIdAsync(long id);
+        Task<bool> DeleteUserAsync(int id);
 
         Task<Customer> GetCustomerByUser(long userId);  
     }

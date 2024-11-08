@@ -67,7 +67,43 @@ namespace KoiFarmShop.Repository.Repositories
             {
                 existUser.Password = user.Password;
                 _context.Users.Update(existUser);
-               await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<User> CreateAccountAsync(User user)
+        {
+            user.UserId = GetNextUserId();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
+
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task UpdateAsync(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<User> GetUserByIdAsync(long id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
+
+        public async Task<bool> DeleteAsync(long id)
+        {
+            
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;

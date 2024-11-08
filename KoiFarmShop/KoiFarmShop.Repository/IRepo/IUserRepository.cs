@@ -19,6 +19,13 @@ namespace KoiFarmShop.Repository.IRepo
 
         Task<bool> ResetPasswordForCustomer(User user);
 
+        Task<User> CreateAccountAsync(User user);
+        Task UpdateAsync(User user);
+        Task<User> GetUserByIdAsync(long id);
+        Task<bool> DeleteAsync(long userId);
+
+        Task<IEnumerable<User>> GetAllAsync();
+
         Task<Customer> GetCustomerByUserId(long userId);
     }
 

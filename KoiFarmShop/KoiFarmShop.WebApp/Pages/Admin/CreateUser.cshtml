@@ -1,0 +1,28 @@
+﻿@page
+@model KoiFarmShop.WebApp.Pages.Admin.CreateUserModel
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<h2>Create User</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="NewUser.UserName"></label>
+        <input asp-for="NewUser.UserName" class="form-control" />
+        <span asp-validation-for="NewUser.UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewUser.Email"></label>
+        <input asp-for="NewUser.Email" class="form-control" />
+        <span asp-validation-for="NewUser.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewUser.Password"></label>
+        <input asp-for="NewUser.Password" type="password" class="form-control" />
+        <span asp-validation-for="NewUser.Password" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+<a href="/Admin/ViewAllUser">Back to List</a>
