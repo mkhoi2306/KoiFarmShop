@@ -13,5 +13,6 @@ namespace KoiFarmShop.Repository.IRepo
         Task<KoiOrderDetail> CreateOrderDetailAsync(KoiOrderDetail orderDetail);
         Task<KoiOrder> GetOrderByIdAsync(long orderId);
         Task<IEnumerable<KoiOrderDetail>> GetOrderDetailsByOrderIdAsync(long orderId);
+        Task<KoiOrder> UpdateOrderAsync(KoiOrder order);
     }
 }

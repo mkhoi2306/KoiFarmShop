@@ -47,5 +47,13 @@ namespace KoiFarmShop.Repository.Repositories
             .Where(od => od.KoiOrderId == orderId)
             .ToListAsync();
         }
+
+        public async Task<KoiOrder> UpdateOrderAsync(KoiOrder order)
+        {
+            _context.KoiOrders.Update(order);
+            await _context.SaveChangesAsync();
+            return order;
+        }
+    }
     }
 }
