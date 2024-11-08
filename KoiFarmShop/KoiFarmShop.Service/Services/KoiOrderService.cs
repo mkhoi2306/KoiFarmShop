@@ -3,16 +3,18 @@ using KoiFarmShop.Repository.Models;
 using KoiFarmShop.Repository.Models.Items;
 using KoiFarmShop.Service.IServices;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace KoiFarmShop.Service.Services
 {
     public class KoiOrderService : IKoiOrderService
     {
         private readonly IKoiOrderRepository _orderRepository;
-
-        public KoiOrderService(IKoiOrderRepository orderRepository)
+        private readonly KoiFarmShopContext _dbContext;
+        public KoiOrderService(IKoiOrderRepository orderRepository, KoiFarmShopContext dbContext)
         {
             _orderRepository = orderRepository;
+            _dbContext = dbContext;
         }
 
         public async Task<KoiOrder> CancelOrderAsync(long orderId, string cancelledBy)
@@ -47,11 +49,18 @@ namespace KoiFarmShop.Service.Services
             return await _orderRepository.UpdateOrderAsync(order);
         }
 
+        public async Task<List<KoiOrderDetail>> GetKoiOrderDetailsByOrderIdsAsync(List<long> koiOrderIds)
+        {
+            return await _dbContext.KoiOrderDetails
+                .Where(kod => koiOrderIds.Contains((long)kod.KoiOrderId))
+                .Include(kod => kod.KoiFish)
+                .ToListAsync();
+        }
+
         public async Task<List<KoiOrder>> GetAllOrdersByAccountAsync(long customerId)
         {
             try
             {
-                // Không dùng `using` ở đây để giữ DbContext mở cho đến khi truy vấn hoàn thành
                 var context = new KoiFarmShopContext();
                 return await context.KoiOrders
                     .Include(o => o.KoiOrderDetails)
@@ -60,7 +69,6 @@ namespace KoiFarmShop.Service.Services
             }
             catch (Exception e)
             {
-                // Chỉ bắt ngoại lệ nếu bạn cần xử lý cụ thể
                 throw new Exception("An error occurred while retrieving orders: " + e.Message);
             }
         }

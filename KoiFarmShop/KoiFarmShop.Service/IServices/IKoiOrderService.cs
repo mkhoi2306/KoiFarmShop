@@ -15,5 +15,6 @@ namespace KoiFarmShop.Service.IServices
         Task<KoiOrder> CancelOrderAsync(long orderId, string cancelledBy);
         
         Task<List<KoiOrder>> GetAllOrdersByAccountAsync(long customerId);
+        Task<List<KoiOrderDetail>> GetKoiOrderDetailsByOrderIdsAsync(List<long> koiOrderIds);
     }
 }
