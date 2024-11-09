@@ -13,8 +13,8 @@
         <tr>
             <th scope="col">Koi Fish Name</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Price (USD)</th>
-            <th scope="col">Total Price (USD)</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total Price</th>
             <th scope="col">Created Date</th>
             <th scope="col">Updated Date</th>
         </tr>
@@ -32,6 +32,11 @@
                 <td>@(order?.CreatedDate?.ToString("yyyy-MM-dd HH:mm") ?? "N/A")</td>
                 <td>@(order?.UpdatedDate?.ToString("yyyy-MM-dd HH:mm") ?? "N/A")</td>
             </tr>
+        <td>
+            <a asp-page-handler="Delete" asp-route-id="@order.KoiOrderId" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+        </td>
         }
     </tbody>
 </table>

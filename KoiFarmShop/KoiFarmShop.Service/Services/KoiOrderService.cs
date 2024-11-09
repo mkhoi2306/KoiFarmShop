@@ -3,6 +3,7 @@ using KoiFarmShop.Repository.Models;
 using KoiFarmShop.Repository.Models.Items;
 using KoiFarmShop.Service.IServices;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq;
 
 namespace KoiFarmShop.Service.Services
@@ -11,10 +12,12 @@ namespace KoiFarmShop.Service.Services
     {
         private readonly IKoiOrderRepository _orderRepository;
         private readonly KoiFarmShopContext _dbContext;
-        public KoiOrderService(IKoiOrderRepository orderRepository, KoiFarmShopContext dbContext)
+        private readonly ILogger<KoiOrderService> _logger;
+        public KoiOrderService(IKoiOrderRepository orderRepository, KoiFarmShopContext dbContext, ILogger<KoiOrderService> logger)
         {
             _orderRepository = orderRepository;
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<KoiOrder> CancelOrderAsync(long orderId, string cancelledBy)
@@ -90,6 +93,45 @@ namespace KoiFarmShop.Service.Services
         public async Task<KoiOrder> GetOrderAsync(long orderId)
         {
             return await _orderRepository.GetOrderByIdAsync(orderId);
+        }
+
+        public async Task<ServiceResponse<bool>> DeleteOrderAsync(long id)
+        {
+            try
+            {
+                var order = await _orderRepository.GetOrderByIdAsync(id);
+                if (order == null)
+                {
+                    return new ServiceResponse<bool>
+                    {
+                        Success = false,
+                        Message = "Order not found",
+                        Data = false
+                    };
+                }
+
+                await _orderRepository.DeleteAsync(id);
+                await _orderRepository.SaveChangesAsync();
+
+                _logger.LogInformation($"Order {id} was successfully deleted");
+
+                return new ServiceResponse<bool>
+                {
+                    Data = true,
+                    Message = "Order successfully deleted"
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error deleting order {id}: {ex.Message}");
+                return new ServiceResponse<bool>
+                {
+                    Success = false,
+                    Message = "Error deleting order",
+                    Data = false
+                };
+            }
+
         }
     }
 }

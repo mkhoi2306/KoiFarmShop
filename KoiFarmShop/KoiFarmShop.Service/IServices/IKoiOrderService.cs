@@ -1,5 +1,6 @@
 ﻿using KoiFarmShop.Repository.Models;
 using KoiFarmShop.Repository.Models.Items;
+using KoiFarmShop.Service.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace KoiFarmShop.Service.IServices
         
         Task<List<KoiOrder>> GetAllOrdersByAccountAsync(long customerId);
         Task<List<KoiOrderDetail>> GetKoiOrderDetailsByOrderIdsAsync(List<long> koiOrderIds);
+        Task<ServiceResponse<bool>> DeleteOrderAsync(long id);
     }
 }

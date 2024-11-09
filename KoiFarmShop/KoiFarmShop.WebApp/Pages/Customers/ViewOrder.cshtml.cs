@@ -15,12 +15,14 @@ namespace KoiFarmShop.WebApp.Pages.Customers
     {
         private readonly IKoiOrderService _koiOrderService;
         private readonly IKoiFishService _koiFishService;
+        private readonly ILogger<ViewOrderModel> _logger;
         // private readonly IKoiOrderDetailService _koiOrderDetailService;
 
-        public ViewOrderModel(IKoiOrderService koiOrderService, IKoiFishService koiFishService)
+        public ViewOrderModel(IKoiOrderService koiOrderService, IKoiFishService koiFishService, ILogger<ViewOrderModel> logger)
         {
             _koiOrderService = koiOrderService;
             _koiFishService = koiFishService;
+            _logger = logger;
             // _koiOrderDetailService = koiOrderDetailService;
         }
         public List<KoiOrderDetail> KoiOrderDetails { get; set; }
@@ -46,5 +48,29 @@ namespace KoiFarmShop.WebApp.Pages.Customers
             // Calculate total price
             TotalPrice = (decimal)koiOrderDetails.Sum(od => od.TotalPrice);
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _koiOrderService.DeleteOrderAsync(id.Value);
+
+            if (!result.Success)
+            {
+                _logger.LogWarning($"Failed to delete order {id}: {result.Message}");
+                TempData["ErrorMessage"] = result.Message;
+                return RedirectToPage("./Index");
+            }
+
+            TempData["SuccessMessage"] = "Order deleted successfully";
+            return RedirectToPage("./Index");
+
+            string user = User.FindFirst("customerId").Value;
+            KoiOrder = await _koiOrderService.GetAllOrdersByAccountAsync(long.Parse(user));
+        }
+
     }
 }
