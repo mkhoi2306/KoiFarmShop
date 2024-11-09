@@ -32,6 +32,12 @@ namespace KoiFarmShop.Repository.Repositories
             return orderDetail;
         }
 
+        public async Task DeleteAsync(long id)
+        {
+            var order = await _context.KoiOrders.FindAsync(id);
+            if (order != null) { _context.KoiOrders.Remove(order); }
+        }
+
         public async Task<KoiOrder> GetOrderByIdAsync(long orderId)
         {
             return await _context.KoiOrders
@@ -46,6 +52,11 @@ namespace KoiFarmShop.Repository.Repositories
             .Include(od => od.KoiFish)
             .Where(od => od.KoiOrderId == orderId)
             .ToListAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
 
         public async Task<KoiOrder> UpdateOrderAsync(KoiOrder order)
