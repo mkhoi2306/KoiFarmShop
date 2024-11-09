@@ -41,7 +41,7 @@ namespace KoiFarmShop.WebApp.Pages.Customers
             var koiFishes = new Dictionary<long, KoiFish>();
             foreach (var id in koiFishIds)
             {
-                var koiFish = await _koiFishService.GetKoiFishByIdAsync(id);
+                var koiFish = await _koiFishService.GetKoiFishByIdAsync(id ?? 0);
                 koiFishes[id ?? 0] = koiFish;
             }
 
